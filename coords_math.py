@@ -3,8 +3,13 @@ import objects
 
 def translate_coords(object_coords): #translates the coords from earth being the origin to the rocket being the origin to render the rocket at the center of the screen at all times
     vector = []
+
+    center_object_position = [0, 0]
+    if objects.center_object != None:    
+        center_object_position = objects.center_object.position
+
     for i in range(parameters.dimensions):
-        vector.append(parameters.screen_dimensions[i]/2 + (object_coords[i]-objects.center_object.position[i])/(parameters.distance_factor))
+        vector.append(parameters.screen_dimensions[i]/2 + (object_coords[i]-center_object_position[i])/(parameters.zoom))
     return vector
 
 def distance(object1_coords, object2_coords):
