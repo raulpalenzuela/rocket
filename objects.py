@@ -39,14 +39,29 @@ class Rocket(Physical_Object):
 
 #sun = Planet("sun", 1.989*10**30, 6.9634*10**9, [0, 0], "red")
 #earth = Planet("earth", physics_constants.EARTH_MASS, physics_constants.EARTH_RADIUS, [0, 0], "blue")
-#moon = Planet("moon", physics_constants.MOON_MASS, physics_constants.MOON_RADIUS, [physics_constants.DISTANCE_EARTH_MOON, 0], "white")
+#moon = Planet("moon", physics_constants.MOON_MASS, physics_constants.MOON_RADIUS, [physics_constants.DISTANCE_EARTH_MOON_PERIAPSIS, 0], "white")
+#moon.velocity = [0, 1075.81]
 #moon.velocity = [0, (physics_constants.G*earth.mass/moon.position[0])**0.5]
 #rocket = Rocket("rocket", 1000, 10**2, [earth.radius + 100, 0], "red")
 
-test1 = Planet("test1", 10**25, 10**4, [-3*10**5, 0], "blue")
-test2 = Planet("test2", 10**25, 10**4, [3*10**5, 0], "red")
-test1.velocity = [0, 5000]
-test2.velocity = [0, -5000]
+# Constants
+mass = 10**0  # Mass of each planet in kg
+
+d1 = 0.97000436
+d2 = 0.24308753
+
+v1 = 0.466203685
+v2 = 0.43236573
+
+# Creating the planets with velocities
+test1 = Planet("test1", mass, 10**-2, [d1, -d2], "blue")
+test1.velocity = [v1, v2]  # Positive y-direction
+
+test2 = Planet("test2", mass, 10**-2, [-d1, d2], "red")
+test2.velocity = [v1, v2]  # Positive y-direction
+
+test3 = Planet("test3", mass, 10**-2, [0, 0], "green")
+test3.velocity = [-0.93240737, -0.86473146]  # Negative y-direction
 
 
-center_object = None
+center_object = test1
