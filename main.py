@@ -35,6 +35,7 @@ def draw_shining_circle(surface, position, max_radius):
         pygame.draw.circle(surface, color, position, i)
 
 text_title = pygame.font.SysFont("", messages.info_size, False, True).render(messages.settings_info, True, "white")
+
 def tick(time):
     screen.blit(background, (0, 0))  # Position the image at the top-left corner (0, 0)
     display_surface.blit(text_title, text_title.get_rect())
@@ -82,8 +83,7 @@ while(parameters.running):
     pygame.display.flip()
 
     clock.tick(parameters.ticks_per_second)
-
-    print(time/parameters.ticks_per_second)
+    #print(time/parameters.ticks_per_second)
     time +=1
 
 pygame.quit()

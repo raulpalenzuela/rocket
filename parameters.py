@@ -1,8 +1,8 @@
 dimensions = 2
 screen_dimensions = [1280, 720]
-ticks_per_second = 100
-frames_per_second = 60
-time_multiplier = 10**0
+ticks_per_second = 10
+frames_per_second = 10
+time_multiplier = 1
 trajectories = True
 running = True
 debug = True
