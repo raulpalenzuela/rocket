@@ -13,12 +13,6 @@ def runEventListener():
             case pygame.QUIT:
                 parameters.running = False
 
-            case pygame.MOUSEBUTTONDOWN:
-                for object in objects.object_list:
-                    if coords_math.distance(coords_math.translate_coords(object.position), event.pos) <= object.radius/parameters.zoom: #object.position doesnt have translated coords
-                        objects.center_object = object
-                        return
-
             case pygame.MOUSEWHEEL:
                 exp = 0
                 
@@ -28,6 +22,12 @@ def runEventListener():
                     exp = 0.01
 
                 parameters.zoom = parameters.zoom * 10**exp
+
+            #case pygame.MOUSEBUTTONUP:
+             #   for object in objects.object_list:
+              #      if coords_math.distance(coords_math.translate_coords(object.position), event.pos) <= object.radius/parameters.zoom: #object.position doesnt have translated coords
+               #         objects.center_object = object
+                #        return
 
             case pygame.KEYDOWN:
                 #print(event.key)

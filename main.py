@@ -6,6 +6,7 @@ import os
 import events
 import messages
 import paint
+import physics
 
 pygame.init()
 pygame.font.init()
@@ -14,12 +15,11 @@ pygame.display.set_caption("Rocket Simulator")
 clock = pygame.time.Clock()
 background = pygame.image.load("image.jpg")
 display_surface = pygame.display.set_mode((1280, 720))
+
 time = 0
-temp_bool = False
+rocket = objects.rocket
 
-
-#def update_with_events():
-#    text_title = pygame.font.SysFont("", messages.info_size, False, True).render(messages.settings_info, True, "white")
+text_title = pygame.font.SysFont("", messages.info_size, False, True).render("", True, "white")
 
 def draw_shining_circle(surface, position, max_radius):
     for i in range(max_radius*2, 0, -2):  # Draw decreasing radius for glow effect
@@ -34,11 +34,9 @@ def draw_shining_circle(surface, position, max_radius):
             color = pygame.Color(0, b, 0, a=0)  # Adjust transparency based on radius
         pygame.draw.circle(surface, color, position, i)
 
-text_title = pygame.font.SysFont("", messages.info_size, False, True).render(messages.settings_info, True, "white")
 
 def tick(time):
     screen.blit(background, (0, 0))  # Position the image at the top-left corner (0, 0)
-    display_surface.blit(text_title, text_title.get_rect())
 
     for object in objects.object_list:
         object.tick()
@@ -53,37 +51,38 @@ def tick(time):
                         1
         )
 
-        if time % (parameters.ticks_per_second) == 0:
-            pygame.draw.circle(
-                            screen,
-                            object.color,
-                            translated_position,
-                            object.radius/parameters.zoom
-            )
-        #draw_shining_circle(screen, translated_position, int(object.radius/parameters.zoom))
-
+        pygame.draw.circle(
+                        screen,
+                        object.color,
+                        translated_position,
+                        object.radius/parameters.zoom
+        )
+        
         object_name = pygame.font.SysFont("", 15, False, True).render(object.name, True, "white")
         display_surface.blit(object_name, object_name.get_rect(topleft=(translated_position[0], translated_position[1])))
 
+    #messages.update()
+    text_title = pygame.font.SysFont("", messages.info_size, False, True).render(messages.get_info_message(), True, "white")
+    display_surface.blit(text_title, text_title.get_rect())
 
-prev_distance = 0
-# set the center of the rectangular object.
+prev_energy = physics.get_energy(rocket)
 while(parameters.running):
     events.runEventListener()
     
     if not parameters.debug:
         os.system('clear')
-    
-    #distance = coords_math.distance(objects.earth.position, objects.moon.position)
-    #print("dist diff", prev_distance - distance)
-    #prev_distance = distance
-    #print("distance", distance)
 
     tick(time)
     pygame.display.flip()
 
     clock.tick(parameters.ticks_per_second)
-    #print(time/parameters.ticks_per_second)
     time +=1
+
+    energy = physics.get_energy(rocket)
+    print("potential", physics.get_potential_energy(rocket))
+    print("kinetic", physics.get_kinetic_energy(rocket))
+    print("e diff", prev_energy - energy, "\n")
+    prev_energy = energy
+
 
 pygame.quit()
